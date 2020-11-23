@@ -36,31 +36,65 @@
                 </li>
             </ul>
         </div>
+
+
     </nav>
-    <div class="container-fluid">
-        <div class="d-flex flex-column flex-wrap  align-items-center vh-100">
+
+    <div class="container-fluid align-items-center">
+        <div class="d-flex flex-column flex-wrap align-items-center">
             <div style="width: 50%;">
-                <div>
+                <div style="margin-top: 3rem; text-align: center;">
                     <h4>Find Exercises</h4>
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Muscle Group</span>
+                <div class="row" style="margin-top: 3rem; text-align: center;">
+                    <div class="col-lg-12">
+                        <form id="search-form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row no-gutters">
+                                        <div class="col-lg-3 col-md-2 col-sm-12 p-0">
+                                            <select class="form-control" id="muscleGroupSelector">
+                                                <option value="all">All</option>
+                                                <option value="shoulder">Shoulder</option>
+                                                <option value="chest">Chest</option>
+                                                <option value="back">Back</option>
+                                                <option value="arms">Arms</option>
+                                                <option value="legs">Legs</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                                            <input type="text" placeholder="search by name and muscle group"
+                                                class="form-control" id="search" name="search">
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
                     </div>
-                    <input id="muscle" type="text" class="form-control">
-                    <button id="search" class="btn btn-primary">Search</button>
-                </div>
-                <div>
-                    <h6>Exercises</h6>
-                    <ul>
-                        <li>test 1</li>
-                        <li>test 2</li>
-                        <li>test 3</li>
-                    </ul>
                 </div>
             </div>
         </div>
+        <div id="searchResults" class="card-deck" style="margin-top: 3rem; text-align: center;">
+
+        </div>
+
     </div>
+    <script src="./js/index.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                filterSearch(value);
+            });
+        });
+        let mgs = document.getElementById("muscleGroupSelector");
+        mgs.addEventListener("change", (e) => {
+            console.log(`e.target.value = ${e.target.value}`);
+            getExcercisesByType(e.target.value);
+        });
+
+    </script>
 </body>
 
 </html>
