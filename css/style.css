@@ -1,0 +1,32 @@
+.login-signup-header {
+    padding: 20px;
+    font-size: 25px;
+}
+
+.submitBtn {
+    margin-top: 15px;
+}
+
+.signin, .signup {
+    font-weight: 600;
+    border: 1.5px solid blue;
+    padding: 20px;
+}
+
+.btn-group, .signin, .signup {
+    width: 400px;
+}
+
+.nav-link{
+   color: #fff; 
+}
+
+.active {
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
