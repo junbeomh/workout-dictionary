@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark mb-2">
         <!-- Brand -->
         <a class="navbar-brand" href="./index.html">WD </a>
 
@@ -34,28 +34,29 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="./profile.html">Profile</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./exercises.html">Exercises</a>
+                </li>
             </ul>
         </div>
     </nav>
     <div class="container-fluid">
         <div class="d-flex flex-column flex-wrap  align-items-center vh-100">
             <div style="width: 50%;">
+                <div>
+                    <h4>Workouts</h4>
+                </div>
+                <div>
+                    <button id="Chest Day" class="dropdown-item border mb-2">Chest Day</button>
+                    <button id="Back Day" class="dropdown-item border mb-2">Back Day</button>
+                    <button id="Leg Day" class="dropdown-item border mb-2">Leg Day</button>
+                </div>
 
-                <p> Profile page</p>
             </div>
         </div>
     </div>
 
-    <script>
-        function addExercise() {
-            let exercise = document.getElementById("inputExercise").value;
-            let list = document.getElementById("workoutList");
-            let entry = document.createElement("li");
-            entry.innerHTML = exercise;
-            list.appendChild(entry);
-        }
-        document.getElementById("add").addEventListener("click", addExercise);
-    </script>
+    <script src="./js/profile.js"></script>
 </body>
 
 </html>
