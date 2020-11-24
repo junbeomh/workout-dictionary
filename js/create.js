@@ -43,31 +43,8 @@ const excercises = [
         description: "asdasdasd",
         type: "shoulder",
     },
-    {
-        name: "Chest Press",
-        description: "asdasdasd",
-        type: "chest",
-    },
-    {
-        name: "Leg Press",
-        description: "asdasdasd",
-        type: "legs",
-    },
-    {
-        name: "Bicep Curl",
-        description: "asdasdasd",
-        type: "arms",
-    },
-    {
-        name: "Deadlift",
-        description: "asdasdasd",
-        type: "back",
-    },
-    {
-        name: "Squats",
-        description: "asdasdasd",
-        type: "legs",
-    },
+
+
 ]
 
 const filterSearch = (value) => {
