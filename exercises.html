@@ -9,7 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="/js/exercise.js"></script>
     <title>Workout Dictionary</title>
 </head>
 
@@ -69,24 +68,7 @@
         </div>
     </div>
 
-    <script>
-
-        // Todo - delete from db
-        function deleteExercise(exercise) {
-            let card = document.getElementById(exercise);
-            card.remove();
-        }
-
-        //Todo - save into db
-        function saveExercise(exercise){
-            console.log("Todo - save into db")
-        }
-
-        // Will be manually added to element when created dynamically when page loaded
-        document.getElementById("manualDelete").addEventListener("click", function () { deleteExercise("BenchPress"); });
-
-        
-    </script>
+    <script src="/js/exercise.js"></script>
 </body>
 
 </html>

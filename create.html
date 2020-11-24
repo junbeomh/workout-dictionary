@@ -9,7 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="/js/create.js"></script>
     <title>Workout Dictionary</title>
 </head>
 
@@ -68,17 +67,7 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function addExercise() {
-            let exercise = document.getElementById("inputExercise").value;
-            let list = document.getElementById("workoutList");
-            let entry = document.createElement("li");
-            entry.innerHTML = exercise;
-            list.appendChild(entry);
-        }
-        document.getElementById("add").addEventListener("click", addExercise);
-    </script>
+    <script src="/js/create.js"></script>
 </body>
 
 </html>
