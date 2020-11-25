@@ -9,6 +9,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.799.0.min.js"></script>
+    <script src="./js/aws.js"></script>
+
     <title>Workout Dictionary</title>
 </head>
 
@@ -35,7 +39,9 @@
                     <a class="nav-link" href="./profile.html"> Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://johnhan.auth.us-west-2.amazoncognito.com/logout?client_id=6p5opk3rhpd33j200se98teu1h&logout_uri=https://www.johnhan.xyz/index.html">Logout</a>
+                    <!-- <a class="nav-link" href="LOGOUT_URL_HERE">Logout</a> -->
+                    <a class="nav-link"
+                        href="https://johnhan.auth.us-west-2.amazoncognito.com/logout?client_id=6p5opk3rhpd33j200se98teu1h&logout_uri=https://www.johnhan.xyz/index.html">Logout</a>
                 </li>
             </ul>
         </div>
@@ -89,14 +95,85 @@
                 var value = $(this).val().toLowerCase();
                 filterSearch(value);
             });
+
+            var pageURL = window.location.href;
+            pageURL = pageURL.toString();
+
+            // Gets url strings
+            var paramIndex = pageURL.indexOf("#"); // When page is hosted on the web, use '?'
+            if (paramIndex === -1) {
+                return;
+            }
+            // Gets url parameters from AWS Cognito response including the 'access token'
+            var parameters = pageURL.substring(paramIndex + 1);
+
+            console.log(" page url: " + pageURL);
+            console.log(" url parameters: " + parameters);
+
+            // Extracts the encoded tokens from url parameters
+            var idToken = getParameter(parameters, "id_token=");
+            var accessToken = getParameter(parameters, "access_token=");
+            console.log("id token: " + idToken);
+            console.log("access token: " + accessToken);
+
+            // Decodes the tokens
+            var idTokenDecoded = atob(idToken.split('.')[1]);
+            var accessTokenDecoded = atob(accessToken.split('.')[1]);
+            console.log("id token decoded: " + idTokenDecoded);
+            console.log("access token decoded: " + accessTokenDecoded);
+
+            // Converts string tokens to JSON
+            var idTokenJson = JSON.parse(idTokenDecoded);
+            var accessTokenJson = JSON.parse(accessTokenDecoded);
+
+            // Can now access the fields as such using the JSON.parse()
+            console.log("email: " + idTokenJson.email);
+            console.log("id: " + idTokenJson.sub);
+
+
+
+
         });
         let mgs = document.getElementById("muscleGroupSelector");
         mgs.addEventListener("change", (e) => {
             console.log(`e.target.value = ${e.target.value}`);
             getExcercisesByType(e.target.value);
         });
-        // 6p5opk3rhpd33j200se98teu1h
+
+
+        AWS.config.region = 'us-west-2'; // Region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-west-2:fe20320f-c27e-4648-b847-ae15ed1eb20c',
+        });
+
+        // console.log(AWS.config.credentials);
     </script>
+
+    <script>
+
+        var data = {
+            UserPoolId: 'us-west-2_JiEZin1Ti', // Your user pool id here
+            ClientId: '6p5opk3rhpd33j200se98teu1h' // Your client id here
+        };
+        var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+        var cognitoUser = userPool.getCurrentUser();
+
+        if (cognitoUser != null) {
+            cognitoUser.getSession(function (err, session) {
+                if (err) {
+                    alert(err);
+                    return;
+                }
+                console.log('session validity: ' + session.isValid());
+
+
+                // Instantiate aws sdk service objects now that the credentials have been updated.
+                // example: var s3 = new AWS.S3();
+
+            });
+        }
+    </script>
+
 </body>
 
 </html>
