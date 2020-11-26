@@ -17,35 +17,6 @@
 </head>
 
 <body>
-    <!-- <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-        <a class="navbar-brand" href="./explore.html">WD </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav mx-auto d-flex justify-content-around" style="min-width: 30%;">
-                <li class="nav-item">
-                    <a class="nav-link active" href="./explore.html">Explore</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./create.html">Create Plan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./profile.html"> Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"
-                        href="https://johnhan.auth.us-west-2.amazoncognito.com/logout?client_id=6p5opk3rhpd33j200se98teu1h&logout_uri=https://www.johnhan.xyz/index.html">Logout</a>
-                </li>
-                <li>
-                    <a class="nav-link" id="myEmail" href="./profile.html"> </a>
-                </li>
-            </ul>
-        </div>
-    </nav> -->
-
-
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
         <a class="navbar-brand" href="./explore.html">WD</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -54,7 +25,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto" style="width: 450px;">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="./explore.html">Explore excercies <span class="sr-only">(current)</span></a>
                 </li>
@@ -66,7 +37,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="myEmail" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="myEmail">
                         <a class="dropdown-item"
@@ -77,9 +48,6 @@
             </ul>
         </div>
     </nav>
-
-
-
 
     <div class="container-fluid align-items-center">
         <div class="d-flex flex-column flex-wrap align-items-center">
@@ -118,6 +86,7 @@
 
         </div>
     </div>
+    <script src="./js/aws.js"></script>
     <script src="./js/index.js"></script>
 
 
@@ -167,6 +136,7 @@
         });
 
         let mgs = document.getElementById("muscleGroupSelector");
+
         mgs.addEventListener("change", (e) => {
             console.log(`e.target.value = ${e.target.value}`);
             getExcercisesByType(e.target.value);
