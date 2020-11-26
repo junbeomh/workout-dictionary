@@ -88,6 +88,8 @@
             var accessToken = getParameter(parameters, "access_token=");
             console.log("id token: " + idToken);
             console.log("access token: " + accessToken);
+            localStorage.setItem("ID_TOKEN", idToken);
+            localStorage.setItem("ACCESS_TOKEN", accessToken);
 
             // Decodes the tokens
             var idTokenDecoded = atob(idToken.split('.')[1]);

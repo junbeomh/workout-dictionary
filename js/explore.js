@@ -1,3 +1,10 @@
+var X = localStorage.getItem("ID_TOKEN");
+var Y = localStorage.getItem("ACCESS_TOKEN");
+
+console.log(X);
+console.log(Y);
+
+
 var mgs = document.getElementById("muscleGroupSelector");
 mgs.addEventListener("change", (e) => {
     console.log(`e.target.value = ${e.target.value}`);
