@@ -115,6 +115,23 @@
         });
 
         // console.log(AWS.config.credentials);
+
+        function getParameter(url, param) {
+            var urlVars = url.split('&');
+            var returnValue;
+            for (var i = 0; i < urlVars.length; i++) {
+                var urlParam = urlVars[i];
+
+                // get up to index.
+                var index = urlParam.toString().indexOf("=");
+                urlParam = urlParam.substring(0, index + 1);
+                if (param === urlParam) {
+                    returnValue = urlVars[i].replace(param, "");
+                    i = urlVars.length; // exits for loop
+                }
+            }
+            return returnValue;
+        }
     </script>
 
     <!-- <script>
