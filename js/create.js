@@ -7,7 +7,7 @@
 // }
 // document.getElementById("add").addEventListener("click", addExercise);
 
-const excercises = [
+var myExcercises = [
     {
         name: "Shoulder Press",
         description: "asdasdasd",
@@ -43,21 +43,7 @@ const excercises = [
         description: "asdasdasd",
         type: "shoulder",
     },
-
-
 ]
-
-const filterSearch = (value) => {
-    $('#favourites div').each(function () {
-        let found = 'false';
-        $(this).each(function () {
-            if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-                found = 'true';
-            }
-        });
-        found === 'true' ? $(this).show() : $(this).hide();
-    })
-}
 
 {/* <div class="card">
     <div class="card-header">
@@ -72,7 +58,7 @@ const filterSearch = (value) => {
     </div>
 </div> */}
 // `${y}-${x}`
-const makeExcercise = (excercise, index) => {
+var makeMyExcercise = (excercise, index) => {
     let myWorkOuts = document.getElementById("favourites");
     let workoutContainer = document.createElement("div");
     let workoutHeader = document.createElement("div");
@@ -111,26 +97,14 @@ const makeExcercise = (excercise, index) => {
     myWorkOuts.appendChild(workoutContainer);
 }
 
-const getAllExcercises = () => {
+var getMyExcercises = () => {
     // make api call
 
     // process api response 
-    excercises.forEach((excercise, index) => {
-        makeExcercise(excercise, index);
+    myExcercises.forEach((excercise, index) => {
+        makeMyExcercise(excercise, index);
     })
 }
 
-const getExcercisesByType = (type) => {
-    const cardColumns = document.getElementById("searchResults");
-    cardColumns.innerHTML = "";
-    // make api call 
 
-    // process api response 
-    excercises.forEach((excercise) => {
-        if (excercise.type === type || type === "all") {
-            makeExcercise(excercise);
-        }
-    })
-}
-
-getAllExcercises(); 
+getMyExcercises(); 

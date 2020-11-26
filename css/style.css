@@ -16,6 +16,9 @@
 .btn-group, .signin, .signup {
     width: 400px;
 }
+.nav-item {
+  cursor: pointer;
+}
 
 .nav-link{
    color: #fff; 
@@ -23,7 +26,6 @@
 
 .active {
     color: white;
-    border-bottom: 1px solid white;
 }
 
 .navbar .navbar-collapse {
@@ -71,7 +73,6 @@
   height: 24px;
 }
   
-
 .card {
   min-width: 500px;
 }
@@ -81,3 +82,4 @@
   flex-direction: row;
   justify-content: space-between;
 }
+

@@ -1,4 +1,10 @@
-const excercises = [
+var mgs = document.getElementById("muscleGroupSelector");
+mgs.addEventListener("change", (e) => {
+    console.log(`e.target.value = ${e.target.value}`);
+    getExcercisesByType(e.target.value);
+});
+
+var excercises = [
     {
         name: "Shoulder Press",
         description: "asdasdasd",
@@ -61,7 +67,7 @@ const excercises = [
     },
 ]
 
-const filterSearch = (value) => {
+var filterSearch = (value) => {
     $('#searchResults .card-header').each(function () {
         let found = 'false';
         $(this).each(function () {
@@ -80,7 +86,7 @@ const filterSearch = (value) => {
   </div>
 </div> */}
 
-const makeExcercise = (excercise, index) => {
+var makeExcercise = (excercise, index) => {
     let cardColumns = document.getElementById("searchResults");
     let workoutContainer = document.createElement("div");
     let workoutHeader = document.createElement("div");
@@ -143,7 +149,7 @@ const makeExcercise = (excercise, index) => {
     // cardColumns.appendChild(myWorkOuts);
 }
 
-const getAllExcercises = () => {
+var getAllExcercises = () => {
     // make api call
 
     // process api response 
@@ -152,8 +158,8 @@ const getAllExcercises = () => {
     })
 }
 
-const getExcercisesByType = (type) => {
-    const cardColumns = document.getElementById("searchResults");
+var getExcercisesByType = (type) => {
+    let cardColumns = document.getElementById("searchResults");
     cardColumns.innerHTML = "";
     // make api call 
 
