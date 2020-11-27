@@ -1,11 +1,7 @@
-// function addExercise() {
-//     let exercise = document.getElementById("inputExercise").value;
-//     let list = document.getElementById("workoutList");
-//     let entry = document.createElement("li");
-//     entry.innerHTML = exercise;
-//     list.appendChild(entry);
-// }
-// document.getElementById("add").addEventListener("click", addExercise);
+var ID_TOKEN = localStorage.getItem("ID_TOKEN");
+var ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
+console.log(ID_TOKEN);
+console.log(ACCESS_TOKEN);
 
 var myExcercises = [
     {

@@ -10,6 +10,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.799.0.min.js"></script>
+    <script type="text/javascript" src="lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="apigClient.js"></script>
     <script>
         $(document).ready(function () {
             $('#app-body').load("./explore.html");
@@ -88,8 +99,6 @@
             var accessToken = getParameter(parameters, "access_token=");
             console.log("id token: " + idToken);
             console.log("access token: " + accessToken);
-            localStorage.setItem("ID_TOKEN", idToken);
-            localStorage.setItem("ACCESS_TOKEN", accessToken);
 
             // Decodes the tokens
             var idTokenDecoded = atob(idToken.split('.')[1]);
@@ -104,6 +113,10 @@
             // Can now access the fields as such using the JSON.parse()
             console.log("email: " + idTokenJson.email);
             console.log("id: " + idTokenJson.sub);
+            localStorage.setItem("email", idTokenJson.email);
+            localStorage.setItem("id", idTokenJson.sub);
+            localStorage.setItem("ID_TOKEN", idToken);
+            localStorage.setItem("ACCESS_TOKEN", accessToken);
 
             let email = document.getElementById('myEmail');
             email.innerHTML = idTokenJson.email;

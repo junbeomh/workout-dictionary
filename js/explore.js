@@ -1,13 +1,43 @@
-var X = localStorage.getItem("ID_TOKEN");
-var Y = localStorage.getItem("ACCESS_TOKEN");
+var ID_TOKEN = localStorage.getItem("ID_TOKEN");
+var ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
+console.log(ID_TOKEN);
+console.log(ACCESS_TOKEN);
 
-console.log(X);
-console.log(Y);
+
+
+
+console.log('hi');
+
+
+var apigClient = apigClientFactory.newClient();
+
+var params = {
+    Authroization: "eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiNnB4UHpBMGhGR1R2MmppSjJOQ1hZUSIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsIm5vbmNlIjoid0w2TzZKTWNuOXpCdnZOY1lSVldlNURjN0ZaUm94NFRGcld0S0NsdEJ1dWNMYkQtZ3Y0VkZFX0dzVHZrdU55bDBPbFJzc1hJenktVVcxYVdoOXhUVDNaUWJwam5zRHptWExvWlhYZ2gxNzItel9DMXlneFZDYjZOaFRjRXIzYmYtV1NEQjdQc0JWdDA2QVJvSElTdzNjTUVTSEM0YURNSDdueTYwajNRcllRIiwiYXVkIjoiNnA1b3BrM3JocGQzM2oyMDBzZTk4dGV1MWgiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDc2NzA0NTgxNDc3OTgzODUyNDAiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjA2MjkxNTA5MDQ0In1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYwNjQzMzgxOCwiZXhwIjoxNjA2NDM3NDE4LCJpYXQiOjE2MDY0MzM4MTgsImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.YYfE8SYb8xceQhriOeLzFbK7aAIfFPf3UT8OkewRPtCh77ilIOx2TzaUk9Z0aX77C1rKXLUgE0cAgoopUzRGZvCA1YNtbcUl9dZ-GJhHUkI8vkshQQGwq31AvxjgI4nuRkPQV60UPDLjABtygg45CP-thqVf7KgZj-XW-UmBm7At2OWYxdP_ArXa9BABbmHHEeXvAk1XF3ThP0-l_1g7gDfbtinxlYjZg_Kxaz-Uk0MWlKOep8-PEhX5cpU7QHZIgtLL5hNNGUWYOC0autHK2dSiRN8UyuyaHItAWlb1-tmJWYB0F8vd8himjAnrY5pVRmjuaEkze6BCnNe9ORrXIw",
+};
+
+var body = {
+};
+
+var additionalParams = {
+
+
+};
+// console.log(params);
+// console.log(params['Authroization']);
+
+apigClient.getexcercisesGet(params, body, additionalParams)
+    .then(function (result) {
+        //This is where you would put a success callback
+        console.log(result);
+    }).catch(function (result) {
+        //This is where you would put an error callback
+    });
+
 
 
 var mgs = document.getElementById("muscleGroupSelector");
 mgs.addEventListener("change", (e) => {
-    console.log(`e.target.value = ${e.target.value}`);
+    console.log(`e.target.value = ${ e.target.value } `);
     getExcercisesByType(e.target.value);
 });
 
@@ -112,16 +142,16 @@ var makeExcercise = (excercise, index) => {
     workoutTitle.setAttribute('id', 'cardTitle');
     workoutTitle.setAttribute('data-toggle', 'collapse');
     workoutTitle.setAttribute('data-toggle', 'collapse');
-    workoutTitle.setAttribute('href', `#workout-descript-${index}`);
+    workoutTitle.setAttribute('href', `#workout - descript - ${ index } `);
     workoutTitle.setAttribute('aria-expanded', 'true');
-    workoutTitle.setAttribute('aria-control', `workout-descript-${index}`);
+    workoutTitle.setAttribute('aria-control', `workout - descript - ${ index } `);
 
     workoutTitle.innerHTML = excercise.type.toUpperCase() + ": " + excercise.name;
     workoutHeader.appendChild(workoutTitle);
     workoutHeader.appendChild(favouriteBtn);
 
     workoutBody.setAttribute('class', 'collapse');
-    workoutBody.setAttribute('id', `workout-descript-${index}`);
+    workoutBody.setAttribute('id', `workout - descript - ${ index } `);
     workoutDescript.setAttribute('class', 'card-block');
 
     workoutDescript.innerHTML = excercise.description;

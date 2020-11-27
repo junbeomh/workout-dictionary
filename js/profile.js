@@ -1,3 +1,8 @@
+var ID_TOKEN = localStorage.getItem("ID_TOKEN");
+var ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
+console.log(ID_TOKEN);
+console.log(ACCESS_TOKEN);
+
 function editWorkout(workout) {
     localStorage.setItem("name", workout);
     window.location.href = "workoutEditor.html";
