@@ -113,8 +113,8 @@
             // Can now access the fields as such using the JSON.parse()
             console.log("email: " + idTokenJson.email);
             console.log("id: " + idTokenJson.sub);
-            localStorage.setItem("email", idTokenJson.email);
-            localStorage.setItem("id", idTokenJson.sub);
+            localStorage.setItem("USER_EMAIL", idTokenJson.email);
+            localStorage.setItem("USER_ID", idTokenJson.sub);
             localStorage.setItem("ID_TOKEN", idToken);
             localStorage.setItem("ACCESS_TOKEN", accessToken);
 

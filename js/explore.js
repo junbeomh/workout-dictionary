@@ -1,44 +1,8 @@
 var ID_TOKEN = localStorage.getItem("ID_TOKEN");
 var ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
+var ID = localStorage.getItem("USER_ID");
 console.log(ID_TOKEN);
 console.log(ACCESS_TOKEN);
-
-
-var apigClient = apigClientFactory.newClient();
-
-var params = {
-    header: {
-        "Authorization": "eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiUVVsQ3RRSXNmUjk0akRkbTNqd1VjdyIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjI5MTUwOTA0NCJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY2ODQyOTIsImV4cCI6MTYwNjY4Nzg5MiwiaWF0IjoxNjA2Njg0MjkyLCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.IVElaYwX6EhyWpZO0mmcTORPDgJ2rQLLFwy65ijD1wc91ifMsLvneStHWb2GMZZJNL33o3g3gNavpvxSGMn3fLJi-BHjfUe1Y2nKIvIY0EwIUn54dUy0Qs_rLeqOBpCIfdBSqRdjACRgpLB0ax6L2rLhJjwZhEd_ObFGEZtJA20u-32Dd5l9D630BVxF9LckpBeNs3sbttD3reQUAytHwFurH5wI210stTxwXWtbKvqgwOv2Vckn1Lv3XWUxsbztKkeOPkRd_FbFbSJoGaO5Q830Y7fsK5P_cMkBNX6N2_nNncPXH6yxGZNBCdciVUq2TlrFl4PHlmJBdHtA78liTg"
-    },
-};
-
-var body = {
-};
-
-var additionalParams = {
-    header: {
-        "Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-        "Access-Control-Allow-Origin": "'*'",
-        "Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-        "Authorization": "eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiUVVsQ3RRSXNmUjk0akRkbTNqd1VjdyIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjI5MTUwOTA0NCJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY2ODQyOTIsImV4cCI6MTYwNjY4Nzg5MiwiaWF0IjoxNjA2Njg0MjkyLCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.IVElaYwX6EhyWpZO0mmcTORPDgJ2rQLLFwy65ijD1wc91ifMsLvneStHWb2GMZZJNL33o3g3gNavpvxSGMn3fLJi-BHjfUe1Y2nKIvIY0EwIUn54dUy0Qs_rLeqOBpCIfdBSqRdjACRgpLB0ax6L2rLhJjwZhEd_ObFGEZtJA20u-32Dd5l9D630BVxF9LckpBeNs3sbttD3reQUAytHwFurH5wI210stTxwXWtbKvqgwOv2Vckn1Lv3XWUxsbztKkeOPkRd_FbFbSJoGaO5Q830Y7fsK5P_cMkBNX6N2_nNncPXH6yxGZNBCdciVUq2TlrFl4PHlmJBdHtA78liTg"
-    },
-};
-
-try {
-    apigClient.getexcercisesGet(params, body, additionalParams)
-        .then(function (result) {
-            //This is where you would put a success callback
-            console.log(result);
-        }).catch(function (result) {
-            //This is where you would put an error callback
-        });
-} catch (err) {
-    console.log(err);
-}
-
-
-
-
 
 var mgs = document.getElementById("muscleGroupSelector");
 mgs.addEventListener("change", (e) => {
@@ -46,68 +10,26 @@ mgs.addEventListener("change", (e) => {
     getExcercisesByType(e.target.value);
 });
 
-var excercises = [
-    {
-        name: "Shoulder Press",
-        description: "asdasdasd",
-        type: "shoulder",
-    },
-    {
-        name: "Chest Press",
-        description: "asdasdasd",
-        type: "chest",
-    },
-    {
-        name: "Leg Press",
-        description: "asdasdasd",
-        type: "legs",
-    },
-    {
-        name: "Bicep Curl",
-        description: "asdasdasd",
-        type: "arms",
-    },
-    {
-        name: "Deadlift",
-        description: "asdasdasd",
-        type: "back",
-    },
-    {
-        name: "Squats",
-        description: "asdasdasd",
-        type: "legs",
-    },
-    {
-        name: "Shoulder Press",
-        description: "asdasdasd",
-        type: "shoulder",
-    },
-    {
-        name: "Chest Press",
-        description: "asdasdasd",
-        type: "chest",
-    },
-    {
-        name: "Leg Press",
-        description: "asdasdasd",
-        type: "legs",
-    },
-    {
-        name: "Bicep Curl",
-        description: "asdasdasd",
-        type: "arms",
-    },
-    {
-        name: "Deadlift",
-        description: "asdasdasd",
-        type: "back",
-    },
-    {
-        name: "Squats",
-        description: "asdasdasd",
-        type: "legs",
-    },
-]
+function getData(ID) {
+    var xmlhttp = new XMLHttpRequest();
+    var url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getexcercises'+ '?id=' + ID ;
+  
+    xmlhttp.open('GET', url);
+    xmlhttp.setRequestHeader('Authorization', 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiUVJVclotZHVpNlZ1NVNsWGdhcmkzZyIsInN1YiI6ImU0YWE2NWNhLTZkMDUtNGVlZi05OGI5LTA4ZDcxYzc3MjBmMiIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImV2ZW50X2lkIjoiYzBhNjNhZGMtY2VlNS00MTYzLWJlY2YtMGFiMDc4MWQ3ZjFmIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY2ODg1NzQsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy13ZXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtd2VzdC0yX0ppRVppbjFUaSIsImNvZ25pdG86dXNlcm5hbWUiOiJlNGFhNjVjYS02ZDA1LTRlZWYtOThiOS0wOGQ3MWM3NzIwZjIiLCJleHAiOjE2MDY2OTIxNzQsImlhdCI6MTYwNjY4ODU3NCwiZW1haWwiOiJqdW5iZW9taDk0QGdtYWlsLmNvbSJ9.Q5CT7_4yK2vfxJN8fyFwySuW0zTYaFSC23mS9Y40K4EWZXLqZjubr0849_dOVvGBvdV4v-zoFzdcKboMbVl1FiUijUvXDYoajGXKclaWPKonQG8MynX2Hz24mPJIDKrp2F062gI6nDtM6JyU_8JhE5BlPxMMAcWDQ5FHLdrfpwD-rXulZFMbcWhbKGr93E9mPHPul-88xkzOOfbzmS0t9jMwotJ3h4VWkXfFt7IC5p3vrJRHPbiY5E9cWN7sJaOA938YaMv6743H-leoZbrPAJXgvfsGiSAu6Wga8-A9TKwUFvzp4eZmgne6eQ4CIdhaddB3i2LdRdl1d5tLnQ5lIg');
+    xmlhttp.onload = function() {
+      if (this.status == 200) {
+        var data = JSON.parse(this.responseText);
+        console.log(data);
+      } else {
+        alert('Could not read data');
+      }
+    };
+    xmlhttp.send();
+  }
+
+  getData(ID);
+
+
 
 var filterSearch = (value) => {
     $('#searchResults .card-header').each(function () {
@@ -166,39 +88,16 @@ var makeExcercise = (excercise, index) => {
     workoutContainer.appendChild(workoutBody);
 
     cardColumns.appendChild(workoutContainer);
-
-    // const cardColumns = document.getElementById("searchResults");
-    // let cardContainer = document.createElement("div");
-    // let card = document.createElement("div");
-    // let cardBody = document.createElement("div");
-    // let cardName = document.createElement("p");
-    // let cardType = document.createElement("p");
-    // let cardDescription = document.createElement("p");
-    // cardContainer.setAttribute('class', 'col-lg-4 col-md-4 col-sm-12 col-xs-12');
-    // card.setAttribute('class', 'card bg-light');
-    // cardBody.setAttribute('class', 'card bg-light');
-    // card.setAttribute('class', 'card-body text-center');
-    // cardName.setAttribute('class', 'card-text');
-    // cardType.setAttribute('class', 'card-text');
-    // cardDescription.setAttribute('class', 'card-text');
-    // cardName.innerHTML = excercise.name;
-    // cardType.innerHTML = excercise.type;
-    // cardDescription.innerHTML = excercise.description;
-    // cardBody.appendChild(cardType);
-    // cardBody.appendChild(cardName);
-    // cardBody.appendChild(cardDescription);
-    // card.appendChild(cardBody);
-    // cardColumns.appendChild(myWorkOuts);
 }
 
-var getAllExcercises = () => {
-    // make api call
+// var getAllExcercises = () => {
+//     // make api call
 
-    // process api response 
-    excercises.forEach((excercise, index) => {
-        makeExcercise(excercise, index);
-    })
-}
+//     // process api response 
+//     excercises.forEach((excercise, index) => {
+//         makeExcercise(excercise, index);
+//     })
+// }
 
 var getExcercisesByType = (type) => {
     let cardColumns = document.getElementById("searchResults");

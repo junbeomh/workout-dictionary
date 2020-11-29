@@ -88,6 +88,7 @@ apigClientFactory.newClient = function (config) {
         
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
+        console.log(params);
         var getexcercisesGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/getexcercises').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
@@ -95,7 +96,8 @@ apigClientFactory.newClient = function (config) {
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
-        
+        console.log(getexcercisesGetRequest.path);
+        console.log(getexcercisesGetRequest.headers);
         
         return apiGatewayClient.makeRequest(getexcercisesGetRequest, authType, additionalParams, config.apiKey);
     };
