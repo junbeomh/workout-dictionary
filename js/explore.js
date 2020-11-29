@@ -17,12 +17,9 @@ var additionalParams = {
         "Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
         "Access-Control-Allow-Origin": "'*'",
         "Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-        "Authorization": "eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiYzIxU3FrSEl5VFF5YzA3a3p0d3pYQSIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjI5MTUwOTA0NCJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY2Nzk2NTksImV4cCI6MTYwNjY4MzI1OSwiaWF0IjoxNjA2Njc5NjU5LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.ZFn05QUSKdrsES_tKKqAauBU-XIrlb8zc1GAe1TlQ7wEwiV0rffa2LzJirQpJ1cDHEz7BgjzB5jMapbnjgw_b6I0P1dV9Fyu6NHdwjuP7hwoUiRRPP87X3cBTiC3pfSCIgWCsQ9gp7oVbPZ4AOeFs0M5dPgie90It46qdJE7EQ85Tk48XuvKBZWW_rZTLOKfeXZtyN_chg94EydnpdKHjGavXpMag7RbIHVnVZNVhQp0V2YMoOS1cVT6ZpHKA4-p45q_mrWRCu6j4qka99RsnuauwiXOFGzduwDlAlXQBhzeX6h0m5peRGWXMdOVmlZ5u6YSCbYkkrjkB0FUhGXtcQ",
+        "Authorization": ID_TOKEN,
     },
 };
-
-console.log(params);
-console.log(params['Authroization']);
 
 apigClient.getexcercisesGet(params, body, additionalParams)
     .then(function (result) {
