@@ -7,6 +7,9 @@ console.log(ACCESS_TOKEN);
 var apigClient = apigClientFactory.newClient();
 
 var params = {
+    header: {
+        "Authorization": "eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiUVVsQ3RRSXNmUjk0akRkbTNqd1VjdyIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjI5MTUwOTA0NCJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY2ODQyOTIsImV4cCI6MTYwNjY4Nzg5MiwiaWF0IjoxNjA2Njg0MjkyLCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.IVElaYwX6EhyWpZO0mmcTORPDgJ2rQLLFwy65ijD1wc91ifMsLvneStHWb2GMZZJNL33o3g3gNavpvxSGMn3fLJi-BHjfUe1Y2nKIvIY0EwIUn54dUy0Qs_rLeqOBpCIfdBSqRdjACRgpLB0ax6L2rLhJjwZhEd_ObFGEZtJA20u-32Dd5l9D630BVxF9LckpBeNs3sbttD3reQUAytHwFurH5wI210stTxwXWtbKvqgwOv2Vckn1Lv3XWUxsbztKkeOPkRd_FbFbSJoGaO5Q830Y7fsK5P_cMkBNX6N2_nNncPXH6yxGZNBCdciVUq2TlrFl4PHlmJBdHtA78liTg"
+    },
 };
 
 var body = {
@@ -17,23 +20,29 @@ var additionalParams = {
         "Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
         "Access-Control-Allow-Origin": "'*'",
         "Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-        "Authorization": ID_TOKEN,
+        "Authorization": "eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiUVVsQ3RRSXNmUjk0akRkbTNqd1VjdyIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjI5MTUwOTA0NCJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY2ODQyOTIsImV4cCI6MTYwNjY4Nzg5MiwiaWF0IjoxNjA2Njg0MjkyLCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.IVElaYwX6EhyWpZO0mmcTORPDgJ2rQLLFwy65ijD1wc91ifMsLvneStHWb2GMZZJNL33o3g3gNavpvxSGMn3fLJi-BHjfUe1Y2nKIvIY0EwIUn54dUy0Qs_rLeqOBpCIfdBSqRdjACRgpLB0ax6L2rLhJjwZhEd_ObFGEZtJA20u-32Dd5l9D630BVxF9LckpBeNs3sbttD3reQUAytHwFurH5wI210stTxwXWtbKvqgwOv2Vckn1Lv3XWUxsbztKkeOPkRd_FbFbSJoGaO5Q830Y7fsK5P_cMkBNX6N2_nNncPXH6yxGZNBCdciVUq2TlrFl4PHlmJBdHtA78liTg"
     },
 };
 
-apigClient.getexcercisesGet(params, body, additionalParams)
-    .then(function (result) {
-        //This is where you would put a success callback
-        console.log(result);
-    }).catch(function (result) {
-        //This is where you would put an error callback
-    });
+try {
+    apigClient.getexcercisesGet(params, body, additionalParams)
+        .then(function (result) {
+            //This is where you would put a success callback
+            console.log(result);
+        }).catch(function (result) {
+            //This is where you would put an error callback
+        });
+} catch (err) {
+    console.log(err);
+}
+
+
 
 
 
 var mgs = document.getElementById("muscleGroupSelector");
 mgs.addEventListener("change", (e) => {
-    console.log(`e.target.value = ${ e.target.value } `);
+    console.log(`e.target.value = ${e.target.value} `);
     getExcercisesByType(e.target.value);
 });
 
@@ -138,16 +147,16 @@ var makeExcercise = (excercise, index) => {
     workoutTitle.setAttribute('id', 'cardTitle');
     workoutTitle.setAttribute('data-toggle', 'collapse');
     workoutTitle.setAttribute('data-toggle', 'collapse');
-    workoutTitle.setAttribute('href', `#workout - descript - ${ index } `);
+    workoutTitle.setAttribute('href', `#workout - descript - ${index} `);
     workoutTitle.setAttribute('aria-expanded', 'true');
-    workoutTitle.setAttribute('aria-control', `workout - descript - ${ index } `);
+    workoutTitle.setAttribute('aria-control', `workout - descript - ${index} `);
 
     workoutTitle.innerHTML = excercise.type.toUpperCase() + ": " + excercise.name;
     workoutHeader.appendChild(workoutTitle);
     workoutHeader.appendChild(favouriteBtn);
 
     workoutBody.setAttribute('class', 'collapse');
-    workoutBody.setAttribute('id', `workout - descript - ${ index } `);
+    workoutBody.setAttribute('id', `workout - descript - ${index} `);
     workoutDescript.setAttribute('class', 'card-block');
 
     workoutDescript.innerHTML = excercise.description;
