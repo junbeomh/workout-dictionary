@@ -53,7 +53,7 @@ apigClientFactory.newClient = function (config) {
 
     
     // extract endpoint and path from url
-    var invokeUrl = 'https://r6wf0fkeq7.execute-api.us-west-2.amazonaws.com/prod';
+    var invokeUrl = 'https://wtt5gj0a66.execute-api.us-west-2.amazonaws.com/prod';
     var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
     var pathComponent = invokeUrl.substring(endpoint.length);
 
@@ -85,16 +85,13 @@ apigClientFactory.newClient = function (config) {
     
     apigClient.getexcercisesGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
-        console.log('HERE');
-        console.log(params);
-        console.log(params['Authorization']);
-
-        apiGateway.core.utils.assertParametersDefined('eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiNnB4UHpBMGhGR1R2MmppSjJOQ1hZUSIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsIm5vbmNlIjoid0w2TzZKTWNuOXpCdnZOY1lSVldlNURjN0ZaUm94NFRGcld0S0NsdEJ1dWNMYkQtZ3Y0VkZFX0dzVHZrdU55bDBPbFJzc1hJenktVVcxYVdoOXhUVDNaUWJwam5zRHptWExvWlhYZ2gxNzItel9DMXlneFZDYjZOaFRjRXIzYmYtV1NEQjdQc0JWdDA2QVJvSElTdzNjTUVTSEM0YURNSDdueTYwajNRcllRIiwiYXVkIjoiNnA1b3BrM3JocGQzM2oyMDBzZTk4dGV1MWgiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDc2NzA0NTgxNDc3OTgzODUyNDAiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjA2MjkxNTA5MDQ0In1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYwNjQzMzgxOCwiZXhwIjoxNjA2NDM3NDE4LCJpYXQiOjE2MDY0MzM4MTgsImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.YYfE8SYb8xceQhriOeLzFbK7aAIfFPf3UT8OkewRPtCh77ilIOx2TzaUk9Z0aX77C1rKXLUgE0cAgoopUzRGZvCA1YNtbcUl9dZ-GJhHUkI8vkshQQGwq31AvxjgI4nuRkPQV60UPDLjABtygg45CP-thqVf7KgZj-XW-UmBm7At2OWYxdP_ArXa9BABbmHHEeXvAk1XF3ThP0-l_1g7gDfbtinxlYjZg_Kxaz-Uk0MWlKOep8-PEhX5cpU7QHZIgtLL5hNNGUWYOC0autHK2dSiRN8UyuyaHItAWlb1-tmJWYB0F8vd8himjAnrY5pVRmjuaEkze6BCnNe9ORrXIw');
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
         var getexcercisesGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/getexcercises').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, ['Authorization']),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
