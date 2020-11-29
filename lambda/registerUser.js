@@ -19,7 +19,8 @@ exports.handler = async (event, context) => {
                 'uid': {S: event.request.userAttributes.sub},
                 'email': {S: event.request.userAttributes.email},
                 'createdAt': {S: date.toISOString()},
-                'favourites': {L: []}
+                'favourites': {L: []},
+                'admin': true
             },
             TableName: 'workout-dictionary-users'
         };
