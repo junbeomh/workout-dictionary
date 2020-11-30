@@ -10,7 +10,6 @@ mgs.addEventListener("change", (e) => {
     getExcercisesByType(e.target.value)
 });
 
-
 var filterSearch = (value) => {
     $('#searchResults .card-header').each(function () {
         let found = 'false';
@@ -22,6 +21,7 @@ var filterSearch = (value) => {
         found === 'true' ? $(this).show() : $(this).hide();
     })
 }
+
 
 {/* <div class="card">
     <div class="card-header">

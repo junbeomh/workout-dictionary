@@ -3,7 +3,6 @@ var ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
 var ID = localStorage.getItem("USER_ID");
 
 console.log("ID: " + ID);
-
 let url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=' + ID;
 
 var getUserData = async () => {
@@ -11,6 +10,7 @@ var getUserData = async () => {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
+        async:false,
         credentials: 'same-origin',
         headers: {
             'Authorization': ID_TOKEN,

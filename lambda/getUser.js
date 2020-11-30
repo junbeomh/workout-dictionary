@@ -9,27 +9,13 @@ const tableName = "workout-dictionary-users"
 
 
 exports.handler = (event, context, callback) => {
-    var res = {
-        "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-        }
-    };
-
     console.log("uid: " + event.uid);
-
     var params = {
         TableName: tableName,
         Key: {
             "uid": event.uid,
         }
     };
-
-    let message = {
-        'message': 'Execution started successfully!'
-    }
-
 
     docClient.get(params, function (err, data) {
         if (err) {
