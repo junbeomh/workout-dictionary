@@ -7,51 +7,19 @@ AWS.config.update({
 var docClient = new AWS.DynamoDB.DocumentClient();
 const tableName = "workout-dictionary-users"
 
-// var params = {
-//     TableName: tableName
-// };
-
-var favouriteToAdd = {
-    type: "TEST",
-    name: "TEST",
-    description: "TEST",
-}
-
-
-
 
 exports.handler = (event, context, callback) => {
-    var caseId = "1734009";
-    var chatMessage = {
-        "2018-04-20T15:02:48Z":
-        {
-            "userId": "wQnUJrklzwWBDOsx83XVETSS7us2",
-            "message": "How are you"
-        }
-    }
+    console.log("event: " + JSON.stringify(event));
+    console.log("uid: " + event.uid);
+    console.log("name: " + event.name);
+    console.log("type: " + event.type);
+    console.log("description: " + event.description);
 
-    // const params = {
-    //     TableName: 'insiders',
-    //     Key: {
-    //         "uuid": event.uuid,
-    //     },
-    //     UpdateExpression: "SET #attrName = list_append(#attrName, :attrValue)",
-    //     ExpressionAttributeNames: {
-    //         "#attrName": "recommendations",
-    //     },
-    //     ExpressionAttributeValues: {
-    //         ":attrValue": [{
-    //             "uuid": `ir_${uuidv4()}`,
-    //             "recommendation": event.recommendation
-    //         }]
-    //     },
-    //     ReturnValues: "ALL_NEW"
-    // }; Ï
 
     var params = {
         TableName: tableName,
         Key: {
-            "uid": 'e4aa65ca-6d05-4eef-98b9-08d71c7720f2',
+            "uid": event.uid,
         },
         UpdateExpression: "SET #attrName = list_append(#attrName, :attrValue)",
         ExpressionAttributeNames: {
@@ -59,19 +27,32 @@ exports.handler = (event, context, callback) => {
         },
         ExpressionAttributeValues: {
             ":attrValue": [{
-                "name": `${favouriteToAdd.name}`,
-                "type": `${favouriteToAdd.type}`,
-                "description": `${favouriteToAdd.description}`,
+                "name": `${event.name}`,
+                "type": `${event.type}`,
+                "description": `${event.description}`,
             }]
         },
         ReturnValues: "ALL_NEW"
     };
 
 
-    docClient.update(params, function (err, data) {
-        if (err) console.log(err);
-        else console.log(data);
-    })
+    docClient.update(params).promise()
+            .then(response => {
+            let res = {
+                "headers": {
+                    "Content-Type": "application/json",
+                     "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+                    "Access-Control-Allow-Methods" : "PUT", // Required for cookies, authorization headers with HTTPS 
+                }
+            };
+            res.statusCode = 200;
+            res.body = "success";
+            console.log(res);
+            callback(null, JSON.parse(JSON.stringify(res)))
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
 
 };
