@@ -5,8 +5,7 @@ AWS.config.update({
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();
-const tableName = "workout-dictionary-users"
-
+const tableName = "workout-dictionary-users";
 
 exports.handler = (event, context, callback) => {
     console.log("event: " + JSON.stringify(event));
@@ -14,7 +13,6 @@ exports.handler = (event, context, callback) => {
     console.log("name: " + event.name);
     console.log("type: " + event.type);
     console.log("description: " + event.description);
-
 
     var params = {
         TableName: tableName,
@@ -53,6 +51,4 @@ exports.handler = (event, context, callback) => {
         .catch(err => {
             console.log(err);
         })
-
-
 };
