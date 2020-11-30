@@ -1,4 +1,4 @@
-function addToDic(){
+var addToDic = async () => {
     let name = document.getElementById("name").value;
     let type = document.getElementById("type").value;
     let description = document.getElementById("description").innerHTML;
@@ -10,7 +10,6 @@ function addToDic(){
     console.log("ID_TOKEN: " + ID_TOKEN);
     console.log("ACCESS_TOKEN: " + ACCESS_TOKEN);
     console.log("ID: " + ID);
-    console.log(excercise);
     let body = {
         "type": type,
         "name": name,
