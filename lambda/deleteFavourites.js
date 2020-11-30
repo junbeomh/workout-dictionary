@@ -13,10 +13,12 @@ exports.handler = (event, context, callback) => {
         TableName: tableName,
         Key: {
             "uid": event.uid,
-        }
+        },
+        UpdateExpression: "REMOVE favourites[0]",
+        ReturnValues:"UPDATED_NEW"
     };
 
-    docClient.delete(params, function(err, data){
+    docClient.update(params, function(err, data){
         if(err) {
             console.error("Unable to delete item.");
         } else {
