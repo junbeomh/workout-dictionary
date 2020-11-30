@@ -24,16 +24,16 @@ var makeMyExcercise = (excercise, index) => {
     workoutHeader.setAttribute('class', 'card-header');
     workoutTitle.setAttribute('id', 'cardTitle');
     workoutTitle.setAttribute('data-toggle', 'collapse');
-    workoutTitle.setAttribute('href', `#workout-descript-${index}`);
+    workoutTitle.setAttribute('href', `#fav-descript-${index}`);
     workoutTitle.setAttribute('aria-expanded', 'true');
-    workoutTitle.setAttribute('aria-controls', `workout-descript-${index} `);
+    workoutTitle.setAttribute('aria-controls', `fav-descript-${index} `);
     workoutType.setAttribute('id', 'card-type');
     workoutTitle.innerHTML = excercise.type + ": " + excercise.name;
     workoutHeader.appendChild(workoutTitle);
     workoutHeader.appendChild(favouriteBtn);
 
     workoutBody.setAttribute('class', 'collapse');
-    workoutBody.setAttribute('id', `workout-descript-${index}`);
+    workoutBody.setAttribute('id', `fav-descript-${index}`);
     workoutDescript.setAttribute('class', 'card-block');
     workoutDescript.innerHTML = excercise.description;
     workoutBody.appendChild(workoutDescript);
@@ -55,7 +55,7 @@ var getMyExcercises = (favourites) => {
     })
 }
 
-const url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=' + ID;
+var url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=' + ID;
 
 async function getUser(url = '') {
     const response = await fetch(url, {
