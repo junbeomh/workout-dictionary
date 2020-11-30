@@ -18,7 +18,7 @@ var makeMyExcercise = (excercise, index) => {
     favouriteBtn.setAttribute('id', `fav-btn-${index}`);
     favouriteBtn.innerHTML = "remove";
 
-    favouriteBtn.onclick = () => removeFavourite(index); // TODO ADD REMOVE API CALL HERE
+    favouriteBtn.onclick = () => removeFavourite(index);
 
     workoutContainer.setAttribute('class', 'card');
     workoutHeader.setAttribute('class', 'card-header');
@@ -65,7 +65,7 @@ var removeFavourite = async (index) => {
         body: JSON.stringify(body) // body data type must match "Content-Type" header
     }).then((response) => {
         console.log(response);
-        location.reload();
+        document.getElementById("create").click();
     });
 
 }
