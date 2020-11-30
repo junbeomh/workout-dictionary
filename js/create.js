@@ -65,7 +65,9 @@ var removeFavourite = async (index) => {
         body: JSON.stringify(body) // body data type must match "Content-Type" header
     }).then((response) => {
         console.log(response);
+        location.reload();
     });
+
 }
 
 var getMyExcercises = (favourites) => {
