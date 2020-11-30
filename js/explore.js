@@ -36,8 +36,9 @@ var makeExcercise = (excercise, index) => {
 
     favouriteBtn.setAttribute('type', 'button');
     favouriteBtn.setAttribute('class', 'btn btn-secondary btn-sm');
+    favouriteBtn.setAttribute('id', `fav-btn-${index}`);
     favouriteBtn.innerHTML = "add";
-    favouriteBtn.onclick = () => addToFavourites(excercise);
+    favouriteBtn.onclick = () => addToFavourites(excercise, index);
 
     workoutContainer.setAttribute('class', 'card');
     workoutHeader.setAttribute('class', 'card-header');
@@ -86,28 +87,39 @@ var getAllExcercises = () => {
     })
 }
 
-var addToFavourites = async (excercise) => {
-    let url = '';
+var addToFavourites = async (excercise, index) => {
+    let url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/addtofavourites';
     console.log("ID_TOKEN: " + ID_TOKEN);
     console.log("ACCESS_TOKEN: " + ACCESS_TOKEN);
     console.log("ID: " + ID);
     console.log(excercise);
+    let body = {
+        "type": excercise.type,
+        "uid": "e4aa65ca-6d05-4eef-98b9-08d71c7720f2",
+        "name": excercise.name,
+        "description": excercise.description 
+    }
 
-    const response = await fetch(url, {
+    await fetch(url, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Authorization': ID_TOKEN,
-            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiNHhrS3ZFM2RlaWhtS1B1WXVPc1ExUSIsInN1YiI6ImU0YWE2NWNhLTZkMDUtNGVlZi05OGI5LTA4ZDcxYzc3MjBmMiIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjA2NjkzMzcyLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZTRhYTY1Y2EtNmQwNS00ZWVmLTk4YjktMDhkNzFjNzcyMGYyIiwiZXhwIjoxNjA2Njk2OTcyLCJpYXQiOjE2MDY2OTMzNzIsImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.I7GzP6Y6LqpE1Rkh9XMQJCgXS26IzXaC0KnLX-TOHHeR-MDt5rtV38xp33fNM_rGDQ-ai--gI-fjuzo_KMqubxeNMcqaS1AuqjmOH1NCkMQbyhedmE-eoeA2xz_B56nRmOJyGN7YUdQiYqUfddSQIMk9rf5JyLTU0TbaTOInH2BOA_2rnftccFzbJp0P2UwVtaIY8SZOP1TVc37Hpv9OHkQP866WMUUn2p_p2pUort8-PuN9bItifRmX5tQ74qWQ6y7lETcHE6iX4jQYnn1Tk-FLL_dHGJqtbG5Z-ciQvVjnIzjcTgw8B_YjkKkmcZ7X_d57hLuDJTs_rVpR2kmRpA'
+            // 'Authorization': ID_TOKEN,
+            'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoibWJWWVJNQ0VOeGxldHBNRVYwclNpQSIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsIm5vbmNlIjoid1N5SEljaTh1SWcyV1JsS2VpWVFyUGUycmVEbWhQaFM0Y2t6cHJweWl6b2ZZQnh1V0JYQXlIMGRiUjdWMHl1a2Vha0FaM2ZtMnZseGxDZDVMUWo3bWVGLVYzQ2wycjFJZW56a0NvT2dIcHZEaXFhUnM0OHJkVV9iWTNNUVB5eWVqMzVtOVF5eko3bzhZa2tzekowUGF0c21BOXU0ckxNTGlJS3BDWmxhYTJZIiwiYXVkIjoiNnA1b3BrM3JocGQzM2oyMDBzZTk4dGV1MWgiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDc2NzA0NTgxNDc3OTgzODUyNDAiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjA2MjkxNTA5MDQ0In1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYwNjcwMzU4NiwiZXhwIjoxNjA2NzA3MTg2LCJpYXQiOjE2MDY3MDM1ODYsImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.G3ecBiwNwxvLEI0d_DMnPiVCmeHxnwf9upEftd0jPJIGsTkjm_e6yw3IsNNIbGv2-cai7bfN_fiitN1Wb5biTSqYJNRGpT4dZ5dSiE7yxYQr63RJSOUBOj-58fPqLtP1-KHd9Q6vL07M3dtKw92yxDnGahexmM9VVyomcF-_XE8LhipEpxSPzBNL8pniAv9YWCNAAFO67zFzMJjZrPaM9tO8qd-XxC32p_4qQ8SFvgncTolC9D39kzPRA8Xj0WxI8ovdGbSjN5UfR8NfFsaW7H7dVtt8MT44AMrbYrK56c-6ag_AeaSWkAq3LCygkbe3kro6djmx39o7MWxZh5CbSw'
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(excercise) // body data type must match "Content-Type" header
+        body: JSON.stringify(body) // body data type must match "Content-Type" header
+    }).then((response) => {
+        console.log(response);
+        let btn = document.getElementById(`fav-btn-${index}`);
+        btn.innerHTML = 'added';
+        btn.style.pointerEvents = 'none';
     });
-    // return response.json(); 
+    // return response.json(); // parses JSON response into native JavaScript objects
 }
 
 
@@ -120,8 +132,8 @@ async function getData(url = '', data = {}) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-            'Authorization': ID_TOKEN,
-            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiNHhrS3ZFM2RlaWhtS1B1WXVPc1ExUSIsInN1YiI6ImU0YWE2NWNhLTZkMDUtNGVlZi05OGI5LTA4ZDcxYzc3MjBmMiIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjA2NjkzMzcyLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZTRhYTY1Y2EtNmQwNS00ZWVmLTk4YjktMDhkNzFjNzcyMGYyIiwiZXhwIjoxNjA2Njk2OTcyLCJpYXQiOjE2MDY2OTMzNzIsImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.I7GzP6Y6LqpE1Rkh9XMQJCgXS26IzXaC0KnLX-TOHHeR-MDt5rtV38xp33fNM_rGDQ-ai--gI-fjuzo_KMqubxeNMcqaS1AuqjmOH1NCkMQbyhedmE-eoeA2xz_B56nRmOJyGN7YUdQiYqUfddSQIMk9rf5JyLTU0TbaTOInH2BOA_2rnftccFzbJp0P2UwVtaIY8SZOP1TVc37Hpv9OHkQP866WMUUn2p_p2pUort8-PuN9bItifRmX5tQ74qWQ6y7lETcHE6iX4jQYnn1Tk-FLL_dHGJqtbG5Z-ciQvVjnIzjcTgw8B_YjkKkmcZ7X_d57hLuDJTs_rVpR2kmRpA'
+            // 'Authorization': ID_TOKEN,
+            'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiUTY1eS1pc2dUSllOVmRmZ1JkR0RXUSIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjI5MTUwOTA0NCJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3MDQxMDcsImV4cCI6MTYwNjcwNzcwNywiaWF0IjoxNjA2NzA0MTA3LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.QPuuNXU47tz1m66rBBy0Sm-X7dAAFBLAQdIQqTRfVLQqCFvYGc1P_2eitRwYLRUJ6N9OVQZeVqFGbjFSfjNZtDwQlEMJPvt58igBERYc29K-olM6RHFlFRbemheGHIBcg9mHN6GTon6JGinaEuJRA4HwQeqs_jqm86YWtuKEmBvBsvNRmUip88nLPhHIs2DNa5tN9tDAKscjU5TjKX9aPTRhF99664D6v1NkseSGmJ7-EO76Er3nhYBaa2gMfLRS0l1MSNOKAPaQmuibINJN-BAXspdPA-Nj3G-JYthqZpf5tkIUsW4I0-mRuh1V2Fy8cpAvAlcInD9hXg_TKbM92A'
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error

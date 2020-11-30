@@ -20,7 +20,7 @@ exports.handler = async (event, context) => {
                 'email': {S: event.request.userAttributes.email},
                 'createdAt': {S: date.toISOString()},
                 'favourites': {L: []},
-                'admin': true
+                'admin': {B: false}
             },
             TableName: 'workout-dictionary-users'
         };
