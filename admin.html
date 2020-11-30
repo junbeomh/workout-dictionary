@@ -29,7 +29,7 @@
                 <div id="exercise" class="border p-2" style="margin-top: 1.5rem;">
                     <div style="padding: 10px">
                         <div class="form-group mb-2">
-                            <input id="name" class="form-control" value="Bench Press">
+                            <input id="name" class="form-control" placeholder="Bench Press">
                         </div>
                         <div class="form-group mb-2">
                             <div class="dropdown show col-xs-3">
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <textarea
-                        id="description" class="form-control" style="padding: 10px; height: 130px">Lying down on a flat bench, bring the bar down to your chest and press it back up.</textarea>
+                        id="description" onchange="onTextAreaChange()" class="form-control" placeholder="Lying down on a flat bench, bring the bar down to your chest and press it back up." style="padding: 10px; height: 130px"></textarea>
                     <button class="btn-primary btn-lg btn-block" id="add" style="margin-top: 10px">Add to Dictionary</button>
                     </div>
 
