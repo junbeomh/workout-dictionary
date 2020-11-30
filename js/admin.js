@@ -10,7 +10,6 @@ var addToDic = async () => {
     console.log("ID_TOKEN: " + ID_TOKEN);
     console.log("ACCESS_TOKEN: " + ACCESS_TOKEN);
     console.log("ID: " + ID);
-    console.log(excercise);
     let body = {
         "type": type,
         "name": name,
