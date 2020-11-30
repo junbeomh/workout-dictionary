@@ -51,6 +51,7 @@ var removeFavourite = async (index) => {
         "uid": ID_TOKEN,
         "index": index
     }
+    console.log(ID_TOKEN + " " + index);
     await fetch(url, {
         method: 'POST',
         mode: 'cors',
