@@ -13,6 +13,16 @@
     padding: 20px;
 }
 
+.btn {
+  width: 75px;
+}
+
+.btn-large {
+  width: 200px;
+  height: 40px;
+
+}
+
 .btn-group, .signin, .signup {
     width: 400px;
 }
@@ -87,7 +97,6 @@
   color: black;
   font-size: 18px;
 }
-
 
 .card-block {
   padding: 15px;

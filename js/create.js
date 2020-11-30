@@ -42,7 +42,6 @@ var makeMyExcercise = (excercise, index) => {
     workoutContainer.appendChild(workoutBody);
 
     myWorkOuts.appendChild(workoutContainer);
-
 }
 
 var removeFavourite = async (index) => {
@@ -59,6 +58,8 @@ var removeFavourite = async (index) => {
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
             'Authorization': ID_TOKEN,
+            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWURvc3dQczJWVXJqSjhhejFucURuQSIsInN1YiI6ImUxZGVhNTIyLWIzYWItNDJjNy1hZjA3LWUwZDM3ZGNmYmIwYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjcxNzk0MTMzMSJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3NjE5MTYsImV4cCI6MTYwNjc2NTUxNiwiaWF0IjoxNjA2NzYxOTE2LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.e-u5uV_Gc0M3q-DhROAUEzvqXZdko9EB6wAaO8IH9XUnpZXLDPJarPoGR4I5trn02yT_xW5CyreBUF2m4Se6CBh3-D7N--NZxdJQ8F822L_2JQwcvvvrrBsmZU0Dgfixvgb0fB8nfkvhmogcZ26QI0i0PQWZQ4_N9HuN4SH8fXv90z09LdWupAAzXDXH26k-AsKkMAfSexG_tgvuVwuQVmFmrax23sMHPmHFgpe3zUNf0GFLsQ3Gfsmz7DjEAOajfA5Y2yJMEn7-6GZw-WB_-YzSwBSTZwGvXPKOM1nYs7F8OFdvyVCSqFgDnFxWMcN3_-wyynBhADcivGULJn9Zcw'
+
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -71,12 +72,19 @@ var removeFavourite = async (index) => {
 }
 
 var getMyExcercises = (favourites) => {
+    let myWorkOuts = document.getElementById("favourites");
+    if (excercises.length == 0) {
+        myWorkOuts.innerHTML = "No excercises in favourites."
+        return;
+    }
     favourites.forEach((excercise, index) => {
         makeMyExcercise(excercise, index);
     })
 }
 
 var url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=' + ID;
+// var url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=e1dea522-b3ab-42c7-af07-e0d37dcfbb0a';
+
 
 async function getUser(url = '') {
     const response = await fetch(url, {
@@ -86,7 +94,7 @@ async function getUser(url = '') {
         credentials: 'same-origin',
         headers: {
             'Authorization': ID_TOKEN,
-            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoibEtwYjBsUHdCTzZLSHBja2pRR1FWdyIsInN1YiI6ImUxZGVhNTIyLWIzYWItNDJjNy1hZjA3LWUwZDM3ZGNmYmIwYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjcxNzk0MTMzMSJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3MjA5MTQsImV4cCI6MTYwNjcyNDUxNCwiaWF0IjoxNjA2NzIwOTE0LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.SC9g6_UzpmDCbN2bt8o7-IDJGcR-7k_oJ6ZzfumL5rI6UZ0L7VR0Hf7p_lY8NEeykdahVD85u5xRA3XSudmjvK573iDdaU8ZRDBP9oBRw_fPFlkctibCq53Kr8LXPoLvnHMKwgwNC1mR7v4vYT8kLN9EW0mkdlsRrfstmnl0m-q1m77QYNMr7l7jnPFAoIpBjm6bXD9utCw0iH4CQ9UTya7VgoVzIs5rcTP92Q-opd7ifDRDLrwafF6UmqBVU16bBMDIXsvK7A7HrSx5TUWH4hYPeUseo7oDms8ronAVDuZIc7hfBWmNcubj4wPMJT7dOJlQpcka_GEfmydnJZUkAg'
+            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWURvc3dQczJWVXJqSjhhejFucURuQSIsInN1YiI6ImUxZGVhNTIyLWIzYWItNDJjNy1hZjA3LWUwZDM3ZGNmYmIwYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjcxNzk0MTMzMSJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3NjE5MTYsImV4cCI6MTYwNjc2NTUxNiwiaWF0IjoxNjA2NzYxOTE2LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.e-u5uV_Gc0M3q-DhROAUEzvqXZdko9EB6wAaO8IH9XUnpZXLDPJarPoGR4I5trn02yT_xW5CyreBUF2m4Se6CBh3-D7N--NZxdJQ8F822L_2JQwcvvvrrBsmZU0Dgfixvgb0fB8nfkvhmogcZ26QI0i0PQWZQ4_N9HuN4SH8fXv90z09LdWupAAzXDXH26k-AsKkMAfSexG_tgvuVwuQVmFmrax23sMHPmHFgpe3zUNf0GFLsQ3Gfsmz7DjEAOajfA5Y2yJMEn7-6GZw-WB_-YzSwBSTZwGvXPKOM1nYs7F8OFdvyVCSqFgDnFxWMcN3_-wyynBhADcivGULJn9Zcw'
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow',

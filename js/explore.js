@@ -3,6 +3,7 @@ var ACCESS_TOKEN = localStorage.getItem("ACCESS_TOKEN");
 var ID = localStorage.getItem("USER_ID");
 
 var excercises = [];
+var favourites = [];
 
 var mgs = document.getElementById("muscleGroupSelector");
 mgs.addEventListener("change", (e) => {
@@ -10,15 +11,17 @@ mgs.addEventListener("change", (e) => {
     getExcercisesByType(e.target.value)
 });
 
+
+
 var filterSearch = (value) => {
-    $('#searchResults .card-header').each(function () {
+    $('#searchResults .card .card-header').each(function () {
         let found = 'false';
         $(this).each(function () {
             if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
                 found = 'true';
             }
         });
-        found === 'true' ? $(this).show() : $(this).hide();
+        found === 'true' ? $(this).parent().show() : $(this).parent().hide();
     })
 }
 
@@ -48,10 +51,24 @@ var makeExcercise = (excercise, index) => {
     let favouriteBtn = document.createElement("button");
 
     favouriteBtn.setAttribute('type', 'button');
-    favouriteBtn.setAttribute('class', 'btn btn-secondary btn-sm');
     favouriteBtn.setAttribute('id', `fav-btn-${index}`);
-    favouriteBtn.innerHTML = "add";
-    favouriteBtn.onclick = () => addToFavourites(excercise, index);
+    let isSaved = false;
+    favourites.map((favourite) => {
+        if (favourite.name == excercise.name) {
+            isSaved = true;
+        }
+    })
+    if (isSaved) {
+        favouriteBtn.innerHTML = "added";
+        favouriteBtn.setAttribute('class', 'btn btn-secondary btn-sm');
+    } else {
+        favouriteBtn.innerHTML = "add";
+        favouriteBtn.setAttribute('class', 'btn btn-primary btn-sm');
+        favouriteBtn.onclick = () => addToFavourites(excercise, index);
+        isSaved = false;
+    }
+
+
 
     workoutContainer.setAttribute('class', 'card');
     workoutHeader.setAttribute('class', 'card-header');
@@ -61,7 +78,7 @@ var makeExcercise = (excercise, index) => {
     workoutTitle.setAttribute('aria-expanded', 'true');
     workoutTitle.setAttribute('aria-controls', `workout-descript-${index} `);
     workoutType.setAttribute('id', 'card-type');
-    workoutTitle.innerHTML =  excercise.type + ": " + excercise.name;
+    workoutTitle.innerHTML = excercise.type + ": " + excercise.name;
     workoutHeader.appendChild(workoutTitle);
     workoutHeader.appendChild(favouriteBtn);
 
@@ -75,6 +92,9 @@ var makeExcercise = (excercise, index) => {
     workoutContainer.appendChild(workoutBody);
 
     cardColumns.appendChild(workoutContainer);
+
+    $("#searchResults .card").sort(asc_sort).appendTo('#searchResults');
+
 }
 
 var getExcercisesByType = (type) => {
@@ -90,9 +110,25 @@ var getExcercisesByType = (type) => {
     })
 }
 
+//$("#debug").text("Output:");
+// accending sort
+function asc_sort(a, b) {
+    return ($(b).text()) < ($(a).text()) ? 1 : -1;
+}
+
+// decending sort
+function dec_sort(a, b) {
+    return ($(b).text()) > ($(a).text()) ? 1 : -1;
+}
+
 
 var getAllExcercises = () => {
     let cardColumns = document.getElementById("searchResults");
+    if (excercises.length == 0) {
+        cardColumns.innerHTML = "No excercises in dictionary."
+        return;
+    }
+
     // console.log(excercises);
     excercises.forEach((excercise, index) => {
         makeExcercise(excercise, index);
@@ -109,7 +145,7 @@ var addToFavourites = async (excercise, index) => {
         "type": excercise.type,
         "uid": ID,
         "name": excercise.name,
-        "description": excercise.description 
+        "description": excercise.description
     }
 
     await fetch(url, {
@@ -119,7 +155,7 @@ var addToFavourites = async (excercise, index) => {
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
             'Authorization': ID_TOKEN,
-            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWGZIQ2YwMkJiWnBhLXludjNsYU54dyIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsIm5vbmNlIjoiajFxLXBmb0ZjTkE0dkg0aDJLbTJEVUpsaHlWVnh3N05yWU1YdjdRSFI5WnptT3FocERScXRuaGpqanZvMmF2U1BZSWZGWUhsWmlBb1F6VzlNMEd3T1EwTUQ0QUg2UkFfSjdiWGNGVmlvY0pZeU9WdWVlVGx5X3BTb0YtV0JON2xad0tmeDAtelZkZEZzdllqQ0NSN2Q3ODNIZmYwdS15d2lqV010SnhZYW1JIiwiYXVkIjoiNnA1b3BrM3JocGQzM2oyMDBzZTk4dGV1MWgiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDc2NzA0NTgxNDc3OTgzODUyNDAiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjA2MjkxNTA5MDQ0In1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYwNjcxMTAzOSwiZXhwIjoxNjA2NzE0NjM5LCJpYXQiOjE2MDY3MTEwMzksImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.F0EfhyWz-F2ub3woIA4lTj86epp3Rd6vte5jEOeHmltFyDdP4d0JMenn7mv0cFIjluYy-hI5LjNiuq5VOkt2JNX0eTZvnR4vhRj0G9tw4Qdjj6axPoLX8msH-tCCIgMnI9XnSfJJ3h3bPLdYNmdWqNc2C4nHBlvm6jZcxSei6Viy5rRR-uqpMhHRLicpoBTjptMKIMT5jkqGviHCiW9GqKLjjbYxNAGYjaIcxsBgRO-E3YtzTl7Et_TGcQA7qVwy1dudMh9y3wUwEfyhDmaSIPyTQKZRWoQaGJsuDvPMjciWhtJx34GiyutyOkVKXoQYxD_-iX3Nc8mEtHQcX6_tyw'
+            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWURvc3dQczJWVXJqSjhhejFucURuQSIsInN1YiI6ImUxZGVhNTIyLWIzYWItNDJjNy1hZjA3LWUwZDM3ZGNmYmIwYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjcxNzk0MTMzMSJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3NjE5MTYsImV4cCI6MTYwNjc2NTUxNiwiaWF0IjoxNjA2NzYxOTE2LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.e-u5uV_Gc0M3q-DhROAUEzvqXZdko9EB6wAaO8IH9XUnpZXLDPJarPoGR4I5trn02yT_xW5CyreBUF2m4Se6CBh3-D7N--NZxdJQ8F822L_2JQwcvvvrrBsmZU0Dgfixvgb0fB8nfkvhmogcZ26QI0i0PQWZQ4_N9HuN4SH8fXv90z09LdWupAAzXDXH26k-AsKkMAfSexG_tgvuVwuQVmFmrax23sMHPmHFgpe3zUNf0GFLsQ3Gfsmz7DjEAOajfA5Y2yJMEn7-6GZw-WB_-YzSwBSTZwGvXPKOM1nYs7F8OFdvyVCSqFgDnFxWMcN3_-wyynBhADcivGULJn9Zcw'
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error
@@ -128,6 +164,8 @@ var addToFavourites = async (excercise, index) => {
     }).then((response) => {
         console.log(response);
         let btn = document.getElementById(`fav-btn-${index}`);
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
         btn.innerHTML = 'added';
         btn.style.pointerEvents = 'none';
     });
@@ -145,7 +183,7 @@ async function getData(url = '', data = {}) {
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
             'Authorization': ID_TOKEN,
-            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWGZIQ2YwMkJiWnBhLXludjNsYU54dyIsInN1YiI6IjU1OTlkY2FhLTcyNjMtNDg0Zi1hN2FlLTg5NDQ0N2M3Yzc0MiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsIm5vbmNlIjoiajFxLXBmb0ZjTkE0dkg0aDJLbTJEVUpsaHlWVnh3N05yWU1YdjdRSFI5WnptT3FocERScXRuaGpqanZvMmF2U1BZSWZGWUhsWmlBb1F6VzlNMEd3T1EwTUQ0QUg2UkFfSjdiWGNGVmlvY0pZeU9WdWVlVGx5X3BTb0YtV0JON2xad0tmeDAtelZkZEZzdllqQ0NSN2Q3ODNIZmYwdS15d2lqV010SnhZYW1JIiwiYXVkIjoiNnA1b3BrM3JocGQzM2oyMDBzZTk4dGV1MWgiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDc2NzA0NTgxNDc3OTgzODUyNDAiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjA2MjkxNTA5MDQ0In1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYwNjcxMTAzOSwiZXhwIjoxNjA2NzE0NjM5LCJpYXQiOjE2MDY3MTEwMzksImVtYWlsIjoianVuYmVvbWg5NEBnbWFpbC5jb20ifQ.F0EfhyWz-F2ub3woIA4lTj86epp3Rd6vte5jEOeHmltFyDdP4d0JMenn7mv0cFIjluYy-hI5LjNiuq5VOkt2JNX0eTZvnR4vhRj0G9tw4Qdjj6axPoLX8msH-tCCIgMnI9XnSfJJ3h3bPLdYNmdWqNc2C4nHBlvm6jZcxSei6Viy5rRR-uqpMhHRLicpoBTjptMKIMT5jkqGviHCiW9GqKLjjbYxNAGYjaIcxsBgRO-E3YtzTl7Et_TGcQA7qVwy1dudMh9y3wUwEfyhDmaSIPyTQKZRWoQaGJsuDvPMjciWhtJx34GiyutyOkVKXoQYxD_-iX3Nc8mEtHQcX6_tyw'
+            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWURvc3dQczJWVXJqSjhhejFucURuQSIsInN1YiI6ImUxZGVhNTIyLWIzYWItNDJjNy1hZjA3LWUwZDM3ZGNmYmIwYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjcxNzk0MTMzMSJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3NjE5MTYsImV4cCI6MTYwNjc2NTUxNiwiaWF0IjoxNjA2NzYxOTE2LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.e-u5uV_Gc0M3q-DhROAUEzvqXZdko9EB6wAaO8IH9XUnpZXLDPJarPoGR4I5trn02yT_xW5CyreBUF2m4Se6CBh3-D7N--NZxdJQ8F822L_2JQwcvvvrrBsmZU0Dgfixvgb0fB8nfkvhmogcZ26QI0i0PQWZQ4_N9HuN4SH8fXv90z09LdWupAAzXDXH26k-AsKkMAfSexG_tgvuVwuQVmFmrax23sMHPmHFgpe3zUNf0GFLsQ3Gfsmz7DjEAOajfA5Y2yJMEn7-6GZw-WB_-YzSwBSTZwGvXPKOM1nYs7F8OFdvyVCSqFgDnFxWMcN3_-wyynBhADcivGULJn9Zcw'
             // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error
@@ -154,10 +192,44 @@ async function getData(url = '', data = {}) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
+// var url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=e1dea522-b3ab-42c7-af07-e0d37dcfbb0a';
+var url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getuser?uid=' + ID;
 
-getData('https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getexcercises')
-    .then(data => {
-        //   console.log(data.body.Items); // JSON data parsed by `data.json()` call
-        excercises = data.body.Items;
-        getAllExcercises();
+async function getUser(url = '') {
+    const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Authorization': ID_TOKEN,
+            // 'Authorization': 'eyJraWQiOiJwRlNGSVE3WWVRaEhpbHNtZWRXeVwveEdHQnRkU2lDdVNCblVHQjVmWllrcz0iLCJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiWURvc3dQczJWVXJqSjhhejFucURuQSIsInN1YiI6ImUxZGVhNTIyLWIzYWItNDJjNy1hZjA3LWUwZDM3ZGNmYmIwYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLXdlc3QtMl9KaUVaaW4xVGlfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9KaUVaaW4xVGkiLCJjb2duaXRvOnVzZXJuYW1lIjoiZ29vZ2xlXzEwNzY3MDQ1ODE0Nzc5ODM4NTI0MCIsImF1ZCI6IjZwNW9wazNyaHBkMzNqMjAwc2U5OHRldTFoIiwiaWRlbnRpdGllcyI6W3sidXNlcklkIjoiMTA3NjcwNDU4MTQ3Nzk4Mzg1MjQwIiwicHJvdmlkZXJOYW1lIjoiR29vZ2xlIiwicHJvdmlkZXJUeXBlIjoiR29vZ2xlIiwiaXNzdWVyIjpudWxsLCJwcmltYXJ5IjoidHJ1ZSIsImRhdGVDcmVhdGVkIjoiMTYwNjcxNzk0MTMzMSJ9XSwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MDY3NjE5MTYsImV4cCI6MTYwNjc2NTUxNiwiaWF0IjoxNjA2NzYxOTE2LCJlbWFpbCI6Imp1bmJlb21oOTRAZ21haWwuY29tIn0.e-u5uV_Gc0M3q-DhROAUEzvqXZdko9EB6wAaO8IH9XUnpZXLDPJarPoGR4I5trn02yT_xW5CyreBUF2m4Se6CBh3-D7N--NZxdJQ8F822L_2JQwcvvvrrBsmZU0Dgfixvgb0fB8nfkvhmogcZ26QI0i0PQWZQ4_N9HuN4SH8fXv90z09LdWupAAzXDXH26k-AsKkMAfSexG_tgvuVwuQVmFmrax23sMHPmHFgpe3zUNf0GFLsQ3Gfsmz7DjEAOajfA5Y2yJMEn7-6GZw-WB_-YzSwBSTZwGvXPKOM1nYs7F8OFdvyVCSqFgDnFxWMcN3_-wyynBhADcivGULJn9Zcw'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
     });
+    return response.json();
+}
+
+
+
+$(document).ready(function () {
+    getUser(url)
+        .then(data => {
+            favourites = data.Item.favourites;
+            getData('https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/getexcercises')
+                .then(data => {
+                    //   console.log(data.body.Items); // JSON data parsed by `data.json()` call
+                    excercises = data.body.Items;
+                    getAllExcercises();
+                });
+        });
+
+    $('#search').on("keyup", function () {
+        var value = $(this).val().toLowerCase().trim();
+        $("#searchResults").filter(function () {
+            filterSearch(value);
+        });
+    });
+});
