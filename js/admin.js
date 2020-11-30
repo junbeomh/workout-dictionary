@@ -48,7 +48,7 @@ var addToDic = async () => {
         // btn.innerHTML = 'added';
         // btn.style.pointerEvents = 'none';
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    // return response.json(); // parses JSON response into native JavaScript objects
 }
 
 document.getElementById("add").addEventListener("click", addToDic);
