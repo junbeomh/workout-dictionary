@@ -1,3 +1,13 @@
+var typeSelector = document.getElementById("type");
+var name = document.getElementById('name').value;
+var description = document.getElementById("description").value;
+var type = 'shoulder';
+
+typeSelector.addEventListener("change", (e) => {
+    console.log(`e.target.value = ${e.target.value} `);
+    type = e.target.value;
+});
+
 var addToDic = async () => {
     let url = API_ADD_TO_DICTIONARY;
     console.log("ID_TOKEN: " + ID_TOKEN);
@@ -8,6 +18,7 @@ var addToDic = async () => {
         "name": name,
         "description": description 
     }
+    console.log(body);
 
     await fetch(url, {
         method: 'POST',
