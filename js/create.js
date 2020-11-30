@@ -18,7 +18,7 @@ var makeMyExcercise = (excercise, index) => {
     favouriteBtn.setAttribute('id', `fav-btn-${index}`);
     favouriteBtn.innerHTML = "remove";
 
-    // favouriteBtn.onclick = () => removeFavourite(excercise, index); // TODO ADD REMOVE API CALL HERE
+    favouriteBtn.onclick = () => removeFavourite(index); // TODO ADD REMOVE API CALL HERE
 
     workoutContainer.setAttribute('class', 'card');
     workoutHeader.setAttribute('class', 'card-header');
@@ -45,8 +45,26 @@ var makeMyExcercise = (excercise, index) => {
 
 }
 
-var removeFavourite = async (excercise, index) => {
-    // TODO CALL API HERE
+var removeFavourite = async (index) => {
+    let url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/deletefavourites';
+    let body = {
+        "uid": ID_TOKEN,
+        "index": index
+    }
+    await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Authorization': ID_TOKEN,
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(body) // body data type must match "Content-Type" header
+    }).then((response) => {
+        console.log(response);
+    });
 }
 
 var getMyExcercises = (favourites) => {

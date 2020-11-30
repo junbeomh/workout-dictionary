@@ -1,11 +1,4 @@
 var addToDic = async () => {
-    let name = document.getElementById("name").value;
-    let type = document.getElementById("type").value;
-    let description = document.getElementById("description").innerHTML;
-    console.log(name);
-    console.log(type);
-    console.log(description);
-
     let url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/createexercise';
     console.log("ID_TOKEN: " + ID_TOKEN);
     console.log("ACCESS_TOKEN: " + ACCESS_TOKEN);

@@ -9,15 +9,21 @@ const tableName = "workout-dictionary-excercises";
 
 exports.handler = (event, context, callback) => {
 
+
     var params = {
         TableName: tableName,
         Item: event
     };
 
-    docClient.put(params).promise()
-        .then(response => {
-            console.log(response)
-        }).catch(err => {
-            console.log(err)
-        })
+    docClient.put(params, function (err, data) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, {
+                statusCode: 200,
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin" : "*" }
+            });
+        }
+    })
 };
