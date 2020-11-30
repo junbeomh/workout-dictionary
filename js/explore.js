@@ -95,7 +95,7 @@ var addToFavourites = async (excercise, index) => {
     console.log(excercise);
     let body = {
         "type": excercise.type,
-        "uid": "e4aa65ca-6d05-4eef-98b9-08d71c7720f2",
+        "uid": ID,
         "name": excercise.name,
         "description": excercise.description 
     }
