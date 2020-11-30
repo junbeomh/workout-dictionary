@@ -1,4 +1,4 @@
-function addToDic(){
+var addToDic = async () => {
     let name = document.getElementById("name").value;
     let type = document.getElementById("type").value;
     let description = document.getElementById("description").innerHTML;
