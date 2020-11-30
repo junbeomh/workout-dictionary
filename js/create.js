@@ -48,7 +48,7 @@ var makeMyExcercise = (excercise, index) => {
 var removeFavourite = async (index) => {
     let url = 'https://d8rmqw1449.execute-api.us-west-2.amazonaws.com/prod/deletefavourites';
     let body = {
-        "uid": ID_TOKEN,
+        "uid": ID,
         "index": index
     }
     console.log(ID_TOKEN + " " + index);
