@@ -53,13 +53,13 @@
             // Extracts the encoded tokens from url parameters
             var idToken = getParameter(parameters, "id_token=");
             var accessToken = getParameter(parameters, "access_token=");
-            // console.log("id token: " + idToken);
-            // console.log("access token: " + accessToken);
+            console.log("id token: " + idToken);
+            console.log("access token: " + accessToken);
 
             // Decodes the tokens
             var idTokenDecoded = atob(idToken.split('.')[1]);
             var accessTokenDecoded = atob(accessToken.split('.')[1]);
-            console.log("id token decoded: " + idTokenDecoded);
+            // console.log("id token decoded: " + idTokenDecoded);
             // console.log("access token decoded: " + accessTokenDecoded);
 
             // Converts string tokens to JSON
